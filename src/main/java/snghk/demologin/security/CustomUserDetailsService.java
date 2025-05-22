@@ -5,17 +5,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import snghk.demologin.domain.LoginHistory;
 import snghk.demologin.domain.User;
+import snghk.demologin.repository.LoginHistoryRepository;
 import snghk.demologin.repository.UserRepository;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final LoginHistoryRepository loginHistoryRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
+
+        loginHistoryRepository.save(LoginHistory.builder().user(user).loginTime(LocalDateTime.now()).build());
         return new CustomUserDetails(user);
     }
 }

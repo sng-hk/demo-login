@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 import static javax.crypto.Cipher.SECRET_KEY;
 
+@Component
 public class JwtUtil {
     private final String SECRET = "my-secret-key-that-is-long-enough-to-be-secure";
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
