@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final LoginHistoryRepository loginHistoryRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
